@@ -29,15 +29,27 @@
     const wrapper = document.querySelector(".wrapper");
     const button = wrapper.querySelector("button");
 
+    // Liste des classes souvent bloquées par AdBlock
     let adClasses = ["ad", "ads", "adsbox", "doubleclick", "ad-placement", "ad-placeholder", "adbadge", "BannerAd"];
     for(let item of adClasses){
       detect.classList.add(item);
     }
+
+    // Vérifier la propriété 'display'
     let getProperty = window.getComputedStyle(detect).getPropertyValue("display");
-    if(!wrapper.classList.contains("show")){
-      getProperty == "none" ? wrapper.classList.add("show") : wrapper.classList.remove("show");
+    console.log("Property display of #detect:", getProperty); // Debug
+
+    // Affiche l'avertissement si AdBlock est détecté
+    if(getProperty === "none") {
+      wrapper.classList.add("show");
+      console.log("AdBlock detected, showing wrapper"); // Debug
+    } else {
+      wrapper.classList.remove("show");
+      console.log("AdBlock not detected, hiding wrapper"); // Debug
     }
-    button.addEventListener("click", ()=>{
+
+    // Bouton pour fermer le message
+    button.addEventListener("click", () => {
       wrapper.classList.remove("show");
     });
   </script>
